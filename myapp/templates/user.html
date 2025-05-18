@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile - Social Media Application</title>
+  <link rel="stylesheet" href="{% static 'css/user.css' %}">
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <nav>
+        <ul>
+          <li><a href="{% url 'register' %}">Register</a></li>
+          <li><a href="{% url 'products' %}">Products</a></li>
+          <li><a href="Learn">Learn</a></li>
+          <li><a href="Safety">Safety</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <h1>User Information</h1>
+  <form method="post" action="{% url 'user' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" value="{{ user.username }}" readonly>
+    </div>
+    <div>
+      <label for="relationship_type">Relationship Type:</label>
+      <select id="relationship_type" name="relationship_type">
+        {% for key, value in user.userprofile.RELATIONSHIP_CHOICES %}
+          <option value="{{ key }}" {% if user.userprofile.relationship_type == key %}selected{% endif %}>
+            {{ value }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label for="city">City:</label>
+      <select id="city" name="city">
+        {% for key, value in user.userprofile.CITY_CHOICES %}
+          <option value="{{ key }}" {% if user.userprofile.city == key %}selected{% endif %}>
+            {{ value }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label>Gender:</label>
+      {% for key, value in user.userprofile.GENDER_CHOICES %}
+        <input type="radio" id="{{ key }}" name="gender" value="{{ key }}" 
+          {% if user.userprofile.gender == key %}checked{% endif %}>
+        <label for="{{ key }}">{{ value }}</label>
+      {% endfor %}
+    </div>
+    <div>
+      <label for="gender_preference">I'm interested in:</label>
+      <select id="gender_preference" name="gender_preference">
+        {% for key, value in user.userprofile.GENDER_PREFERENCE_CHOICES %}
+          <option value="{{ key }}" {% if user.userprofile.gender_preference == key %}selected{% endif %}>
+            {{ value }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label for="height">Height:</label>
+      <select id="feet" name="feet">
+        {% for i in "123456789" %}
+          <option value="{{ i }}" {% if user.userprofile.height|floatformat:0 == i %}selected{% endif %}>
+            {{ i }} ft
+          </option>
+        {% endfor %}
+      </select>
+      <select id="inches" name="inches">
+        {% for i in "01234567891011" %}
+          <option value="{{ i }}" {% if user.userprofile.height|floatformat:1|slice:"-1:" == i %}selected{% endif %}>
+            {{ i }} in
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label>Hobbies:</label>
+      <div class="checkbox-group">
+        {% for key, value in user.userprofile.HOBBIES_CHOICES %}
+          <div class="checkbox-item">
+            <input type="checkbox" id="hobby_{{ key }}" name="hobbies" value="{{ key }}"
+              {% if key in user.userprofile.hobbies_list %}checked{% endif %}>
+            <label for="hobby_{{ key }}">{{ value }}</label>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <!-- File input for profile picture -->
+    <div>
+      <label for="profile_pic">Profile Picture:</label>
+      <input type="file" id="profile_pic" name="profile_pic" accept="image/*">
+
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+  <a href="{% url 'update' %}">Update Profile</a>
+</body>
+<script src="{% static 'js/date.js' %}"></script>
+</html>

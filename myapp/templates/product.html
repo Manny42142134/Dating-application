@@ -1,0 +1,94 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dating Products</title>
+  <link rel="stylesheet" href="{% static 'css/product.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" 
+  integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" 
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <nav>
+        <ul>
+          <li><a href="{% url 'register' %}">Register</a></li>
+          <li><a href="Learn">Learn</a></li>
+          <li><a href="Safety">Safety</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <div class="main">
+    <h1>Subscriptions Tiers</h1>
+    <p>Upgrade the tiers to echance your Online Dating Experience.</p>
+  </div> 
+
+  <div class="cards-row">
+    <div class="card-container">
+      <div class="card">
+        <div class="front">
+          <h1>Tier 1</h1>
+        </div>
+        <div class="back">
+          <ul>
+            <li>Unlimited Likes</li>
+            <li>Unlimited Rewinds</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card-container">
+      <div class="card">
+        <div class="front">
+          <h1>Tier 2</h1>
+        </div>
+        <div class="back">
+          <ul>
+            <li>See Who Likes You</li>
+            <li>New Top Picks every day</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card-container">
+      <div class="card">
+        <div class="front">
+          <h1>Tier 3</h1>
+        </div>
+        <div class="back">
+          <ul>
+            <li>Message before Matching </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<footer>
+  <div class="social_icon">
+    <i class="fa-brands fa-facebook"></i>
+    <i class="fa-brands fa-twitter"></i>
+    <i class="fa-brands fa-instagram"></i>
+    <i class="fa-brands fa-tiktok"></i>
+  </div>
+  
+    <div class="legal links">
+    <a href="#terms">Terms & Conditions</a>
+    <a href="#privacy">Privacy Policy</a>
+  </div>
+  
+  <div class="contact info">
+    <p>Email:SocialMediaApp@gmail.com</p>
+    <p>Corperate Address: 17 Violet LN </p>
+  </div> 
+  </footer>
+
+</html>

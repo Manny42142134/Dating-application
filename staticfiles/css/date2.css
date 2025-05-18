@@ -1,0 +1,213 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+    height: 100vh;
+}
+
+.app-container {
+    max-width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Header Styles */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #1e1e1e;
+    border-bottom: 1px solid #333;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 24px;
+    background: linear-gradient(to right, #FF7854, #FD267A);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+
+.header-icons {
+    font-size: 20px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+/* Card Stack Styles */
+.card-stack {
+    flex: 1;
+    position: relative;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-message {
+    color: #aaa;
+    font-size: 18px;
+}
+
+/* New Card Styles */
+.card {
+    width: 300px;
+    height: 450px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    position: absolute;
+    background: #1e1e1e;
+    transition: transform 0.3s ease;
+    border: 1px solid #333;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-image {
+    width: 100%;
+    height: 65%;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid #333;
+}
+
+.card-info {
+    padding: 15px;
+    height: 35%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-info h2 {
+    margin: 0 0 5px 0;
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+.card-location {
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.hobbies-container {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.hobby-tag {
+    background: linear-gradient(to right, #FF7854, #FD267A);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.action-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background: #1e1e1e;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    color: white;
+}
+
+.action-btn:active {
+    transform: scale(0.95);
+}
+
+.btn-pass {
+    color: #fd5c63;
+}
+
+.btn-like {
+    color: #4fc3f7;
+}
+
+.btn-superlike {
+    color: #f7d44c;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0;
+    background-color: #1e1e1e;
+    border-top: 1px solid #333;
+}
+
+.nav-item {
+    color: #aaa;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.nav-item.active {
+    color: #FD267A;
+}
+
+/* Profile Section (keep your existing styles) */
+.profile-section {
+    /* ... your existing profile styles ... */
+}
+
+/* Animation Classes */
+.card.swipe-right {
+    transform: translateX(200%) rotate(30deg);
+    opacity: 0;
+}
+
+.card.swipe-left {
+    transform: translateX(-200%) rotate(-30deg);
+    opacity: 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    .card {
+        width: 85%;
+        height: 65vh;
+    }
+    
+    .action-buttons {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .action-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}

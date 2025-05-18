@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Social Media Application</title>
+    <link href="{% static 'css/date.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" 
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <div class="nav">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'products' %}">Products</a></li>
+                    <li><a href="Learn">Learn</a></li>
+                    <li><a href="Safety">Safety</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="wrapper">
+        <div class="form-container login">
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <h2>Login</h2>
+                {% if error %}
+                    <div class="error-message">{{ error }}</div>
+                {% endif %}
+                <div class="form-group">
+                    <input type="text" name="username" id="username" placeholder="Username" required>
+                    <i class="fas fa-user"></i>
+                    <label for="username">Username</label>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" id="password" required>
+                    <i class="fas fa-lock"></i>
+                    <label for="password">Password</label>
+                </div>
+                
+                <div class="remember-me">
+                    <input type="checkbox" name="remember_me" id="remember_me">
+                    <label for="remember_me">Remember Me</label>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <div class="link">
+                <p>Don't have an account? <a href="{% url 'register' %}" class="signin-link">Register here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/date.js' %}"></script>
+    <script src="https://kit.fontawesome.com/9e5ba2e3f5.js" crossorigin="anonymous"></script>
+</body>
+<footer>
+    <div class="social_icon">
+        <i class="fa-brands fa-facebook"></i>
+        <i class="fa-brands fa-twitter"></i>
+        <i class="fa-brands fa-instagram"></i>
+        <i class="fa-brands fa-tiktok"></i>
+    </div>
+    <div class="legal links">
+        <a href="#terms">Terms & Conditions</a>
+        <a href="#privacy">Privacy Policy</a>
+    </div>
+    <div class="contact info">
+        <p>Email: SocialMediaApp@gmail.com</p>
+        <p>Corporate Address: 17 Violet LN</p>
+    </div>
+</footer>
+</html>

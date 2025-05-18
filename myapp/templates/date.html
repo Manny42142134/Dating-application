@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swipe Dating App</title>
+  <link rel="stylesheet" href="{% static 'css/date2.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="logo gradient-text">Swipe</div>
+      <div class="header-icons">
+        <a href="{% url 'logout' %}" class="logout-btn">Log out</a>
+      </div>
+    </header>
+
+  <!-- HTML update for date.html - replace the profile section -->
+<div class="profile-section" id="profile-section">
+  <div class="profile-header">
+    <h2>My Profile</h2>
+    <i class="fas fa-times" id="close-profile"></i>
+  </div>
+  
+  <div class="profile-content">
+    <!-- Profile Picture -->
+    <div class="profile-pic-large">
+      {% if user.userprofile.profile_pic %}
+        <img src="{{ user.userprofile.profile_pic.url }}" alt="Profile Picture">
+      {% else %}
+        <div class="default-pic"><i class="fas fa-user"></i></div>
+      {% endif %}
+    </div>
+    
+    <!-- Readonly Fields -->
+    <div class="readonly-fields">
+      <label for="username">Username:</label>
+      <input type="text" id="username" value="{{ username }}" readonly />
+      
+      <label for="relationship_type">Relationship Type:</label>
+      <input type="text" id="relationship_type" value="{{ relationship_type }}" readonly />
+      
+      <label for="city">City:</label>
+      <input type="text" id="city" value="{{ city }}" readonly />
+      
+      <label for="gender">Gender:</label>
+      <input type="text" id="gender" value="{{ gender }}" readonly />
+      
+      <label for="height">Height:</label>
+      <input type="text" id="height" value="{{ height }}" readonly />
+      
+      <label for="hobbies">Hobbies:</label>
+      <input type="text" id="hobbies" 
+             value="{% for hobby in hobbies %}{{ hobby }} {% endfor %}"
+             readonly />
+    </div>
+  </div>
+  
+  <!-- Edit Profile Button now outside of profile-content but still inside profile-section -->
+  <a href="{% url 'user' %}" class="edit-profile-btn">
+    <i class="fas fa-edit"></i> Edit Profile
+  </a>
+</div>
+    <!-- Main Card Stack (for swiping) -->
+    <div class="card-stack">
+      <!-- Cards will be dynamically inserted here -->
+      <div class="loading-message">
+        <i class="fas fa-spinner fa-spin"></i> Loading profiles...
+      </div>
+    </div>
+
+    <!-- Matches Section (Messaging UI) -->
+    <div class="matches-section" id="matches-section" style="display: none;">
+      <!-- This area will be populated with matched users and allow messaging -->
+      <h2>Your Matches</h2>
+      <div class="matches-list"></div>
+    </div>
+
+    <!-- Action Buttons (for swiping) -->
+    <div class="action-buttons">
+      <button class="action-btn btn-pass"><i class="fas fa-times"></i></button>
+      <button class="action-btn btn-superlike"><i class="fas fa-star"></i></button>
+      <button class="action-btn btn-like"><i class="fas fa-heart"></i></button>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <a href="#" class="nav-item active" data-view="cards"><i class="fas fa-fire"></i></a>
+      <a href="#" class="nav-item" data-view="discover"><i class="fas fa-search"></i></a>
+      <a href="#" class="nav-item" data-view="matches"><i class="fas fa-comment-alt"></i></a>
+      <a href="#" class="nav-item" id="profile-nav-btn" data-view="profile"><i class="fas fa-user"></i></a>
+    </nav>
+  </div>
+</body>
+<script src="{% static 'js/date2.js' %}"></script>
+</html>
