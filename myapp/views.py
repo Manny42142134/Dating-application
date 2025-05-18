@@ -10,12 +10,14 @@ import random
 import requests 
 from django.templatetags.static import static
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 def register_page(request):
     if request.method == 'POST':
         form = UserProfileCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            UserProfile.objects.create(user=user)  # Ensure profile is created
             login(request, user)
             return redirect('user')
         else:
@@ -23,6 +25,7 @@ def register_page(request):
     else:
         form = UserProfileCreationForm()
     return render(request, 'register.html', {'form': form})
+
 
 def login_page(request):
     if request.method == 'POST':
@@ -36,72 +39,64 @@ def login_page(request):
             return render(request, 'login.html', {'error': 'Invalid credentials'})
     return render(request, 'login.html')
 
+
 def products(request):
     return render(request, 'product.html')
 
-def user(request):
-    if request.method == 'POST':
-        print(request.POST)  # Debugging
-        user_profile = request.user.userprofile
 
-        # Process form data
+@login_required
+def user(request):
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        print(request.POST)
         user_profile.relationship_type = request.POST.get('relationship_type')
         user_profile.city = request.POST.get('city')
         user_profile.gender = request.POST.get('gender')
-        
-        # Add gender preference processing
         user_profile.gender_preference = request.POST.get('gender_preference', 'both')
-        
-        # Process height
+
         feet = request.POST.get('feet', 0)
         inches = request.POST.get('inches', 0)
         try:
             user_profile.height = float(feet) + float(inches) / 12.0
         except (TypeError, ValueError):
             user_profile.height = None
-        
-        # Process hobbies
+
         hobbies = request.POST.getlist('hobbies', [])
         user_profile.hobbies = ','.join(hobbies) if hobbies else ''
-        
-        # Process profile picture if needed
+
         if 'profile_pic' in request.FILES:
             user_profile.profile_pic = request.FILES['profile_pic']
-        
+
         user_profile.save()
-        return redirect('date')  # Redirect to date page
-        
+        return redirect('date')
+
     return render(request, 'user.html')
 
+
+@login_required
 def update(request):
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     if request.method == 'POST':
         print(request.POST)
-        user_profile = request.user.userprofile
-
         user_profile.relationship_type = request.POST.get('relationship_type')
         user_profile.city = request.POST.get('city')
         user_profile.gender = request.POST.get('gender')
-        
-        # Add gender preference processing
         user_profile.gender_preference = request.POST.get('gender_preference', 'both')
-        
+
         feet = request.POST.get('feet')
         inches = request.POST.get('inches')
         if feet and inches:
             user_profile.height = float(feet) + float(inches) / 12.0
-        
+
         hobbies = request.POST.getlist('hobbies')
         user_profile.hobbies = ','.join(hobbies)
-        
-        # Process profile picture update if provided
+
         if 'profile_pic' in request.FILES:
             user_profile.profile_pic = request.FILES['profile_pic']
 
         user_profile.save()
         return redirect('user')
     else:
-        # Render update form with existing profile information
-        user_profile = request.user.userprofile
         context = {
             'profile': user_profile,
             'current_gender_preference': user_profile.gender_preference
@@ -109,23 +104,24 @@ def update(request):
         return render(request, 'update.html', context)
 
 
+@login_required
 def date_page(request):
-    user_profile = request.user.userprofile
-    
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+
     height_feet = int(user_profile.height) if user_profile.height else 0
     height_inches = int((user_profile.height - height_feet) * 12) if user_profile.height else 0
-    
+
     context = {
         'username': request.user.username,
         'email': request.user.email,
-        'relationship_type': user_profile.get_relationship_type_display(),
-        'city': user_profile.get_city_display(),
-        'gender': user_profile.get_gender_display(),
-        'gender_preference': user_profile.get_gender_preference_display(),
+        'relationship_type': user_profile.get_relationship_type_display() if user_profile.relationship_type else 'Not specified',
+        'city': user_profile.get_city_display() if user_profile.city else 'Not specified',
+        'gender': user_profile.get_gender_display() if user_profile.gender else 'Not specified',
+        'gender_preference': user_profile.get_gender_preference_display() if user_profile.gender_preference else 'Not specified',
         'height': f"{height_feet} ft {height_inches} in" if user_profile.height else "Not specified",
         'hobbies': user_profile.hobbies_list(),
     }
-    
+
     return render(request, 'date.html', context)
 
 def logout_view(request):
