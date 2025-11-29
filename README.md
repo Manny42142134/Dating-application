@@ -1,0 +1,2 @@
+Hello all Weclcome to my Dating applicatiion this project was used with HTML, CSS and Javascript for the front end Backend logic contains Django and a built in sqlite3 along with Json and Api Logic to fetch nonesistent users from the database.
+In order to make  the swiping feature work I had to use Javascript, Also Matching feature is used  for my front-end for now I planned to do some adjustments to my applications soon.
